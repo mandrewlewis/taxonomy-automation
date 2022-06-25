@@ -37,7 +37,7 @@ time.sleep(10)
 for i in range(len(data.clean_df)):
     # start from...
     gsuite_row = int(data.clean_df.iloc[i].name)+2
-    if gsuite_row < 0: continue
+    if gsuite_row <= 235: continue
 
     # get row data from csv
     url = data.clean_df.iloc[i].URL.strip()
@@ -121,23 +121,28 @@ for i in range(len(data.clean_df)):
 
     # tag_sets = ['ministry/us','target/students/undergrad','location/americas/us/california']
 
-    for set_index, set in enumerate(tag_sets):
-        for tag_index, tag in enumerate(set.split('/')):
-            tag_text = tag
-            if tag_text == 'Geographies Custom': tag_text = 'Geographies, Custom'
-            dropdown = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, f'//*[@id="wtgm_aem-tagdiv"]/div[2]/div/table/tbody/tr[{set_index+1}]/td[{tag_index+1}]/select')))
-            Select(dropdown).select_by_visible_text(tag_text)
-            log.write(f'...add tag [{set_index}][{tag_index}]{tag}\n')
+    #This conditional breaks out of tagging if there are tags present
+    dropdown = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, f'//*[@id="wtgm_aem-tagdiv"]/div[2]/div/table/tbody/tr[1]/td[1]/select')))
+    if dropdown.get_attribute('value') != '':
+        log.write('    !!!Tags already present\n')
+    else:
+        for set_index, set in enumerate(tag_sets):
+            for tag_index, tag in enumerate(set.split('/')):
+                tag_text = tag
+                if tag_text == 'Geographies Custom': tag_text = 'Geographies, Custom'
+                dropdown = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, f'//*[@id="wtgm_aem-tagdiv"]/div[2]/div/table/tbody/tr[{set_index+1}]/td[{tag_index+1}]/select')))
+                Select(dropdown).select_by_visible_text(tag_text)
+                log.write(f'...add tag [{set_index}][{tag_index}]{tag}\n')
 
     log.write(f'...DONE tagging\n')
 
     # Click save
-    # WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, 'publish'))).click()
-    # log.write('...SAVED\n')
+    driver.find_element_by_id('publish').submit()
+    log.write('...SAVED\n')
     time.sleep(10)
 
     log.write(f'FINISHED PAGE - no errors\n')
-    finished_rows.append(int(data.clean_df.iloc[1].name)+2)
+    finished_rows.append(gsuite_row)
 
 ##################################################### End loop
 
