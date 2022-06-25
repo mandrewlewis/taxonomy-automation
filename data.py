@@ -1,10 +1,10 @@
 import pandas as pd
 
-df = pd.read_csv('Campus Sitemap & Taxonomy Work 2021-2022 - Wordpress HS Sites.csv')
+df = pd.read_csv('Campus Sitemap & Taxonomy Work 2021-2022 - Wordpress Campus Sites.csv')
 
 clean_df = df.iloc[7::]
 clean_df = clean_df[['SPECIAL INSTRUCTIONS','Unnamed: 2','Unnamed: 10','Unnamed: 16']]
-clean_df.rename(columns={'SPECIAL INSTRUCTIONS' : 'Status','Unnamed: 2' : 'URL','Unnamed: 10' : 'Tags'}, inplace=True)
+clean_df.rename(columns={'SPECIAL INSTRUCTIONS' : 'Status','Unnamed: 2' : 'URL','Unnamed: 10' : 'Tags','Unnamed: 16' : 'Staff'}, inplace=True)
 # clean_df = clean_df[(clean_df['Status']=='To Do')]
 clean_df = clean_df.dropna()
 print(clean_df)
