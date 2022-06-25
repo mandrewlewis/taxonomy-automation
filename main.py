@@ -12,8 +12,7 @@ import pandas as pd
 
 # Create log file
 timestr = time.strftime("%Y%m%d-%H%M%S")
-log = open(f'logs/{timestr}.txt','w')
-log.write('This is a test')
+log = open(f'logs/HS{timestr}.txt','w')
 finished_rows = []
 
 # Set up driver and PATH
@@ -37,7 +36,7 @@ time.sleep(10)
 for i in range(len(data.clean_df)):
     # start from...
     gsuite_row = int(data.clean_df.iloc[i].name)+2
-    if gsuite_row <= 235: continue
+    # if gsuite_row <= 188: continue
 
     # get row data from csv
     url = data.clean_df.iloc[i].URL.strip()
