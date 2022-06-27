@@ -93,7 +93,7 @@ for i in range(len(data.clean_df)):
     tagline = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, '_customize-input-blogdescription')))
     if tagline.get_attribute('value') == '' or tagline.get_attribute('value') == 'Just another WordPress site':
         tagline.clear()
-        tagline.send_keys('Helping you take your next step toward Jesus')
+        tagline.send_keys('~~Tagline Here~~') ### Insert custom tagline here!
         log.write('   ***missing/bad tagline updated\n')
 
     # Click publish
@@ -109,7 +109,7 @@ for i in range(len(data.clean_df)):
     # Check excerpt
     excerpt = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, 'excerpt')))
     if excerpt.get_attribute('value') == '':
-        excerpt.send_keys('Find Christian community at your school.')
+        excerpt.send_keys('~~~Excerpt Here~~~') ### Insert custom tagline here!
         log.write('   ***missing excerpt added\n')
 
     # Click Taxonomy [Add] (n-1 times)
@@ -118,7 +118,7 @@ for i in range(len(data.clean_df)):
         add_tag_btn.click()
         log.write('...click add & create extra tag group\n')
 
-    # tag_sets = ['ministry/us','target/students/undergrad','location/americas/us/california']
+    # EXAMPLE STRUCTURE tag_sets = ['ministry/us','target/students/undergrad','location/americas/us/california']
 
     #This conditional breaks out of tagging if there are tags present
     dropdown = WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, f'//*[@id="wtgm_aem-tagdiv"]/div[2]/div/table/tbody/tr[1]/td[1]/select')))
